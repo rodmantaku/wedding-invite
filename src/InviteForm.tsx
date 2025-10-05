@@ -1,61 +1,73 @@
-import React, { useRef, type FormEvent } from "react";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { inviteFormSchema, type InviteFormValues } from "./validation";
+import {
+  ChakraProvider,
+  VStack,
+  Input,
+  Textarea,
+  Button,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+} from "@chakra-ui/react";
 import emailjs from "@emailjs/browser";
 
 const InviteForm: React.FC = () => {
-  const formRef = useRef<HTMLFormElement>(null);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<InviteFormValues>({
+    resolver: yupResolver(inviteFormSchema),
+  });
 
-  const sendEmail = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmit = async (data: InviteFormValues) => {
+    try {
+      const pubKey = import.meta.env.VITE_PUB_KEY;
+      const serviceID = import.meta.env.VITE_SERVICE_ID;
+      const templateID = import.meta.env.VITE_TEMPLATE_ID;
 
-    if (!formRef.current) return;
+      await emailjs.send(serviceID, templateID, data, pubKey);
 
-    const pubKey = import.meta.env.VITE_PUB_KEY;
-    const serviceID = import.meta.env.VITE_SERVICE_ID;
-    const templateID = import.meta.env.VITE_TEMPLATE_ID;
-    emailjs
-      .sendForm(
-        serviceID, // EmailJSのサービスID
-        templateID, // テンプレートID
-        formRef.current,
-        pubKey // パブリックキー
-      )
-      .then(
-        () => {
-          alert("送信しました！ありがとうございます。");
-          formRef.current?.reset();
-        },
-        (error) => {
-          alert("送信に失敗しました: " + error.text);
-        }
-      );
+      alert("送信しました！ありがとうございます。");
+      reset();
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        alert("送信に失敗しました: " + error.message);
+      } else {
+        alert("送信に失敗しました");
+      }
+    }
   };
 
   return (
-    <form
-      ref={formRef}
-      onSubmit={sendEmail}
-      className="flex flex-col gap-2 max-w-md mx-auto"
-    >
-      <label>お名前</label>
-      <input type="text" name="name" required className="border p-2 rounded" />
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <VStack spacing={4} maxW="md" mx="auto" p={4}>
+        <FormControl isInvalid={!!errors.name}>
+          <FormLabel>お名前</FormLabel>
+          <Input {...register("name")} />
+          <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
+        </FormControl>
 
-      <label>メールアドレス</label>
-      <input
-        type="email"
-        name="email"
-        required
-        className="border p-2 rounded"
-      />
+        <FormControl isInvalid={!!errors.email}>
+          <FormLabel>メールアドレス</FormLabel>
+          <Input type="email" {...register("email")} />
+          <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
+        </FormControl>
 
-      <label>メッセージ</label>
-      <textarea name="title" className="border p-2 rounded" />
+        <FormControl isInvalid={!!errors.title}>
+          <FormLabel>メッセージ</FormLabel>
+          <Textarea {...register("title")} />
+          <FormErrorMessage>{errors.title?.message}</FormErrorMessage>
+        </FormControl>
 
-      <button
-        type="submit"
-        className="bg-blue-500 text-white rounded p-2 mt-2 hover:bg-blue-600"
-      >
-        送信
-      </button>
+        <Button type="submit" colorScheme="blue" isLoading={isSubmitting}>
+          送信
+        </Button>
+      </VStack>
     </form>
   );
 };
