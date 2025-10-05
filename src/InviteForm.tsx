@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { inviteFormSchema, type InviteFormValues } from "./validation";
 import {
-  ChakraProvider,
   VStack,
   Input,
   Textarea,
