@@ -24,9 +24,9 @@ function App() {
           w="100%"
           h="auto"
           borderRadius="md"
-          initial={{ opacity: 0, y: 20 }} // 最初は透明・少し下に
-          animate={{ opacity: 1, y: 0 }} // フェードイン＋上に戻る
-          transition={{ duration: 1.2, ease: "easeOut" }} // アニメーション速度
+          initial={{ opacity: 0 }} // 最初は透明・少し下に
+          animate={{ opacity: 1 }} // フェードイン＋上に戻る
+          transition={{ duration: 1.5 }} // アニメーション速度
         ></MotionImage>
         <InviteForm />
       </div>
