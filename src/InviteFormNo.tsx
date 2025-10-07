@@ -10,14 +10,8 @@ import {
   FormControl,
   FormLabel,
   FormErrorMessage,
-  Fade,
-  Box,
 } from "@chakra-ui/react";
 import emailjs from "@emailjs/browser";
-
-import { motion } from "framer-motion";
-
-const MotionBoxN = motion(Box);
 
 const InviteFormNo: React.FC = () => {
   const {
