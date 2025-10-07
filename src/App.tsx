@@ -3,13 +3,32 @@
 // import viteLogo from "/vite.svg";
 // import React from "react";
 import "./App.css";
-import InviteForm from "./InviteForm";
-import { Image } from "@chakra-ui/react";
+import InviteFormYes from "./InviteFormYes";
+import {
+  Badge,
+  Box,
+  Center,
+  Fade,
+  HStack,
+  Icon,
+  Image,
+  Radio,
+  RadioGroup,
+  Stack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import topimg from "./assets/image.png";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import InviteFormNo from "./InviteFormNo";
+import { CalendarIcon } from "@chakra-ui/icons";
+
 const MotionImage = motion(Image);
 
 function App() {
+  const [attendance, setAttendance] = useState<string>("");
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
       <div className="bg-white shadow-lg rounded-xl p-6 w-full max-w-lg">
@@ -24,11 +43,57 @@ function App() {
           w="100%"
           h="auto"
           borderRadius="md"
-          initial={{ opacity: 0 }} // 最初は透明・少し下に
-          animate={{ opacity: 1 }} // フェードイン＋上に戻る
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{ duration: 1.5 }} // アニメーション速度
         ></MotionImage>
-        <InviteForm />
+
+        <Fade
+          in={true}
+          transition={{
+            enter: { duration: 1.0 }, // フェードインの速度（秒）
+          }}
+        >
+          <VStack mt={4} align="start" spacing={1}>
+            <HStack spacing={2} align="center">
+              <Text fontSize="lg" fontWeight="bold" color="gray.700">
+                日時:
+              </Text>
+              <Text fontSize="lg" color="gray.600">
+                12月27日 (土)
+              </Text>
+              <Badge colorScheme="gray" variant="subtle">
+                時間未定
+              </Badge>
+            </HStack>
+            <HStack>
+              <Text fontSize="lg" fontWeight="bold" color="gray.700">
+                場所:
+              </Text>
+              <Text fontSize="lg" color="gray.600">
+                東京の何処か
+              </Text>
+            </HStack>
+          </VStack>
+
+          <Center mt={4}>
+            <RadioGroup onChange={setAttendance} value={attendance}>
+              <Stack direction="row" spacing={10}>
+                <Radio value="出席">出席</Radio>
+                <Radio value="欠席">欠席</Radio>
+              </Stack>
+            </RadioGroup>
+          </Center>
+        </Fade>
+        {attendance ? (
+          attendance === "出席" ? (
+            <InviteFormYes />
+          ) : (
+            <InviteFormNo />
+          )
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );
