@@ -6,11 +6,9 @@ import "./App.css";
 import InviteFormYes from "./InviteFormYes";
 import {
   Badge,
-  Box,
   Center,
   Fade,
   HStack,
-  Icon,
   Image,
   Radio,
   RadioGroup,
@@ -22,7 +20,6 @@ import topimg from "./assets/image.png";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import InviteFormNo from "./InviteFormNo";
-import { CalendarIcon } from "@chakra-ui/icons";
 
 const MotionImage = motion(Image);
 
