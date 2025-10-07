@@ -13,6 +13,8 @@
     "target": "esnext",
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "noUnusedLocals": false, // ← 未使用変数を許可
+    "noUnusedParameters": false // ← 未使用パラメータを許可
   }
 }

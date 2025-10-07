@@ -6,6 +6,8 @@ import "./App.css";
 import InviteForm from "./InviteForm";
 import { Image } from "@chakra-ui/react";
 import topimg from "./assets/image.png";
+import { motion } from "framer-motion";
+const MotionImage = motion(Image);
 
 function App() {
   return (
@@ -13,7 +15,7 @@ function App() {
       <div className="bg-white shadow-lg rounded-xl p-6 w-full max-w-lg">
         {/* <h1 className="text-2xl font-bold mb-4 text-center">結婚式ご招待</h1>
         <p className="mb-6 text-center">ご出席のご意向をお知らせください ✨</p> */}
-        <Image
+        <MotionImage
           src={topimg}
           alt="トップ画像"
           // borderRadius="md"
@@ -21,7 +23,11 @@ function App() {
           // objectFit="cover"
           w="100%"
           h="auto"
-        ></Image>
+          borderRadius="md"
+          initial={{ opacity: 0, y: 20 }} // 最初は透明・少し下に
+          animate={{ opacity: 1, y: 0 }} // フェードイン＋上に戻る
+          transition={{ duration: 1.2, ease: "easeOut" }} // アニメーション速度
+        ></MotionImage>
         <InviteForm />
       </div>
     </div>
