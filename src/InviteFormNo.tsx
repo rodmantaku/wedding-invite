@@ -11,8 +11,13 @@ import {
   FormLabel,
   FormErrorMessage,
   Fade,
+  Box,
 } from "@chakra-ui/react";
 import emailjs from "@emailjs/browser";
+
+import { motion } from "framer-motion";
+
+const MotionBoxN = motion(Box);
 
 const InviteFormNo: React.FC = () => {
   const {
@@ -46,35 +51,33 @@ const InviteFormNo: React.FC = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <VStack spacing={4} maxW="md" mx="auto" p={4}>
-        <Fade
-          in={true}
-          transition={{
-            enter: { duration: 1.0 }, // フェードインの速度（秒）
-            exit: { duration: 0.5 }, // フェードアウトの速度（秒）
-          }}
-        >
-          <FormControl isInvalid={!!errors.name}>
-            <FormLabel>お名前</FormLabel>
-            <Input {...register("name")} />
-            <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
-          </FormControl>
+        {/* <MotionBoxN
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        > */}
+        <FormControl isInvalid={!!errors.name}>
+          <FormLabel>お名前</FormLabel>
+          <Input {...register("name")} />
+          <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
+        </FormControl>
 
-          <FormControl isInvalid={!!errors.email}>
-            <FormLabel>メールアドレス</FormLabel>
-            <Input type="email" {...register("email")} />
-            <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
-          </FormControl>
+        <FormControl isInvalid={!!errors.email}>
+          <FormLabel>メールアドレス</FormLabel>
+          <Input type="email" {...register("email")} />
+          <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
+        </FormControl>
 
-          <FormControl isInvalid={!!errors.title}>
-            <FormLabel>欠席理由</FormLabel>
-            <Textarea {...register("title")} />
-            <FormErrorMessage>{errors.title?.message}</FormErrorMessage>
-          </FormControl>
+        <FormControl isInvalid={!!errors.title}>
+          <FormLabel>欠席理由</FormLabel>
+          <Textarea {...register("title")} />
+          <FormErrorMessage>{errors.title?.message}</FormErrorMessage>
+        </FormControl>
 
-          <Button type="submit" colorScheme="blue" isLoading={isSubmitting}>
-            送信
-          </Button>
-        </Fade>
+        <Button type="submit" colorScheme="blue" isLoading={isSubmitting}>
+          送信
+        </Button>
+        {/* </MotionBoxN> */}
       </VStack>
     </form>
   );

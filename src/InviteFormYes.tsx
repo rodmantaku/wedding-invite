@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { inviteFormSchema, type InviteFormValues } from "./validation";
@@ -11,8 +11,12 @@ import {
   FormLabel,
   FormErrorMessage,
   Fade,
+  Box,
 } from "@chakra-ui/react";
 import emailjs from "@emailjs/browser";
+import { motion } from "framer-motion";
+
+// const MotionBoxY = motion(Box);
 
 const InviteFormYes: React.FC = () => {
   const {
@@ -46,35 +50,33 @@ const InviteFormYes: React.FC = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <VStack spacing={4} maxW="md" mx="auto" p={4}>
-        <Fade
-          in={true}
-          transition={{
-            enter: { duration: 1.0 }, // フェードインの速度（秒）
-            exit: { duration: 0.5 }, // フェードアウトの速度（秒）
-          }}
-        >
-          <FormControl isInvalid={!!errors.name}>
-            <FormLabel>お名前</FormLabel>
-            <Input {...register("name")} />
-            <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
-          </FormControl>
+        {/* <MotionBoxY
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        > */}
+        <FormControl isInvalid={!!errors.name}>
+          <FormLabel>お名前</FormLabel>
+          <Input {...register("name")} />
+          <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
+        </FormControl>
 
-          <FormControl isInvalid={!!errors.email}>
-            <FormLabel>メールアドレス</FormLabel>
-            <Input type="email" {...register("email")} />
-            <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
-          </FormControl>
+        <FormControl isInvalid={!!errors.email}>
+          <FormLabel>メールアドレス</FormLabel>
+          <Input type="email" {...register("email")} />
+          <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
+        </FormControl>
 
-          <FormControl isInvalid={!!errors.title}>
-            <FormLabel>メッセージ</FormLabel>
-            <Textarea {...register("title")} />
-            <FormErrorMessage>{errors.title?.message}</FormErrorMessage>
-          </FormControl>
+        <FormControl isInvalid={!!errors.title}>
+          <FormLabel>メッセージ</FormLabel>
+          <Textarea {...register("title")} />
+          <FormErrorMessage>{errors.title?.message}</FormErrorMessage>
+        </FormControl>
 
-          <Button type="submit" colorScheme="blue" isLoading={isSubmitting}>
-            送信
-          </Button>
-        </Fade>
+        <Button type="submit" colorScheme="blue" isLoading={isSubmitting}>
+          送信
+        </Button>
+        {/* </MotionBoxY> */}
       </VStack>
     </form>
   );
