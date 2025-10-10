@@ -27,7 +27,7 @@ const InviteFormNo: React.FC = () => {
     try {
       const pubKey = import.meta.env.VITE_PUB_KEY;
       const serviceID = import.meta.env.VITE_SERVICE_ID;
-      const templateID = import.meta.env.VITE_TEMPLATE_ID;
+      const templateID = import.meta.env.VITE_TEMPLATE_ID_NO;
 
       await emailjs.send(serviceID, templateID, data, pubKey);
 
